@@ -25,7 +25,7 @@ class Board:
 
     def p_update(self, line:Line):
         w,r=line.w, line.r
-        for p in self.p:
+        for p, i in zip(self.p, range(len(self.p))):
             if (p.w,p.r)!=(w,r):
                 self.p.remove(p)
 
