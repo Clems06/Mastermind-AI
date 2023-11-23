@@ -4,11 +4,11 @@
 {% block content %}
 <div class="h-100 container-fluid justify-content-center d-flex">
     <div class="d-grid gap-4 col-6 mx-auto my-auto">
-        <a href="{{ url_for('game') }}">
+        <a class="mx-auto" href="{{ url_for('game') }}">
             <button type="button" class="btn btn-primary btn-lg">Play Game</button>
         </a>
-        <a href="{{ url_for('ai') }}">
-            <button type="button" class="btn btn-primary btn-lg">Play versus A.I.</button>
+        <a class="mx-auto" href="{{ url_for('ai') }}">
+            <button type="button" class="btn btn-primary btn-lg">A.I. Training</button>
         </a>
     </div>
 </div>
