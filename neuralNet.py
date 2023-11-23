@@ -60,13 +60,7 @@ class Net():
             layer1[mask_random] = layer2[mask_random]
 
 
-
-
-
-
-
-
-net = Net([2, 5, 3], "sigmoid")
+"""net = Net([2, 5, 3], "sigmoid")
 print(net.getOutput([0, 0]))
-print()
+print()"""
 
