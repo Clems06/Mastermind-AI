@@ -3,55 +3,60 @@
 
 {% block content %}
 <div class="w-100 d-flex container-fluid justify-content-center">
-    <form method="post" class="w-100">
-        <div class="container-fluid border d-flex p-1" style="height: 150px;">
-            <div class="col-3 d-flex align-items-center justify-content-center">
-                <select id="pin1" class="form-select rounded-circle border-2 border-primary" style="background-color: {{red}}; width: 100px; height: 100px; color: transparent;">
-                    <option value="{{red}}">Red</option>
-                    <option value="{{green}}">Green</option>
-                    <option value="{{blue}}">Blue</option>
-                    <option value="{{yellow}}">Yellow</option>
-                    <option value="{{orange}}">Orange</option>
-                    <option value="{{pink}}">Pink</option>
-                    <option value="{{violet}}">Violet</option>
-                    <option value="{{grey}}">Grey</option>
-                </select>
+    <form method="get" class="w-100">
+        <div class="container-fluid border p-1">
+            <div class="row w-100" style="height: 150px;">
+                <div class="col-3 d-flex align-items-center justify-content-center">
+                    <select id="pin1" class="form-select rounded-circle border-2 border-primary" style="background-color: {{red}}; width: 100px; height: 100px; color: transparent;">
+                        <option value="{{red}}">Red</option>
+                        <option value="{{green}}">Green</option>
+                        <option value="{{blue}}">Blue</option>
+                        <option value="{{yellow}}">Yellow</option>
+                        <option value="{{orange}}">Orange</option>
+                        <option value="{{pink}}">Pink</option>
+                        <option value="{{violet}}">Violet</option>
+                        <option value="{{grey}}">Grey</option>
+                    </select>
+                </div>
+                <div class="col-3 d-flex align-items-center justify-content-center">
+                    <select id="pin2" class="form-select rounded-circle border-2 border-primary" style="background-color: {{red}}; width: 100px; height: 100px; color: transparent;">
+                        <option value="{{red}}">Red</option>
+                        <option value="{{green}}">Green</option>
+                        <option value="{{blue}}">Blue</option>
+                        <option value="{{yellow}}">Yellow</option>
+                        <option value="{{orange}}">Orange</option>
+                        <option value="{{pink}}">Pink</option>
+                        <option value="{{violet}}">Violet</option>
+                        <option value="{{grey}}">Grey</option>
+                    </select>
+                </div>
+                <div class="col-3 d-flex align-items-center justify-content-center">
+                    <select id="pin3" class="form-select rounded-circle border-2 border-primary" style="background-color: {{red}}; width: 100px; height: 100px; color: transparent;">
+                        <option value="{{red}}">Red</option>
+                        <option value="{{green}}">Green</option>
+                        <option value="{{blue}}">Blue</option>
+                        <option value="{{yellow}}">Yellow</option>
+                        <option value="{{orange}}">Orange</option>
+                        <option value="{{pink}}">Pink</option>
+                        <option value="{{violet}}">Violet</option>
+                        <option value="{{grey}}">Grey</option>
+                    </select>
+                </div>
+                <div class="col-3 d-flex align-items-center justify-content-center">
+                    <select id="pin4" class="form-select rounded-circle border-2 border-primary" style="background-color: {{red}}; width: 100px; height: 100px; color: transparent;">
+                        <option value="{{red}}">Red</option>
+                        <option value="{{green}}">Green</option>
+                        <option value="{{blue}}">Blue</option>
+                        <option value="{{yellow}}">Yellow</option>
+                        <option value="{{orange}}">Orange</option>
+                        <option value="{{pink}}">Pink</option>
+                        <option value="{{violet}}">Violet</option>
+                        <option value="{{grey}}">Grey</option>
+                    </select>
+                </div>
             </div>
-            <div class="col-3 d-flex align-items-center justify-content-center">
-                <select id="pin2" class="form-select rounded-circle border-2 border-primary" style="background-color: {{red}}; width: 100px; height: 100px; color: transparent;">
-                    <option value="{{red}}">Red</option>
-                    <option value="{{green}}">Green</option>
-                    <option value="{{blue}}">Blue</option>
-                    <option value="{{yellow}}">Yellow</option>
-                    <option value="{{orange}}">Orange</option>
-                    <option value="{{pink}}">Pink</option>
-                    <option value="{{violet}}">Violet</option>
-                    <option value="{{grey}}">Grey</option>
-                </select>
-            </div>
-            <div class="col-3 d-flex align-items-center justify-content-center">
-                <select id="pin3" class="form-select rounded-circle border-2 border-primary" style="background-color: {{red}}; width: 100px; height: 100px; color: transparent;">
-                    <option value="{{red}}">Red</option>
-                    <option value="{{green}}">Green</option>
-                    <option value="{{blue}}">Blue</option>
-                    <option value="{{yellow}}">Yellow</option>
-                    <option value="{{orange}}">Orange</option>
-                    <option value="{{pink}}">Pink</option>
-                    <option value="{{violet}}">Violet</option>
-                    <option value="{{grey}}">Grey</option>
-                </select>
-            </div>
-            <div class="col-3 d-flex align-items-center justify-content-center">
-                <select id="pin4" class="form-select rounded-circle border-2 border-primary" style="background-color: {{red}}; width: 100px; height: 100px; color: transparent;">
-                    <option value="{{red}}">Red</option>
-                    <option value="{{green}}">Green</option>
-                    <option value="{{blue}}">Blue</option>
-                    <option value="{{yellow}}">Yellow</option>
-                    <option value="{{orange}}">Orange</option>
-                    <option value="{{pink}}">Pink</option>
-                    <option value="{{violet}}">Violet</option>
-                    <option value="{{grey}}">Grey</option>
-                </select>
+            <div class="row justify-content-center">
+                <button class="btn btn-primary w-auto" type="submit">Send this combination</button>
             </div>
         </div>
     </form>

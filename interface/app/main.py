@@ -9,7 +9,7 @@ colors={'red':"#D90404", 'blue':"#05C7F2", 'green':"#078C03", 'yellow':"#F2B705"
 def index():
     return render_template('index.html')
 
-@app.route('/game')
+@app.route('/game', methods=['POST', 'GET'])
 def game():
     return render_template('game.html', **colors)
 
