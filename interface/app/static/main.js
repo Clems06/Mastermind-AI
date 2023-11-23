@@ -4,19 +4,19 @@ pin1.onchange = (event) => {
     pin1.style.backgroundColor = inputText;
 }
 
-var pin2 = document.getElementById('pin1');
+var pin2 = document.getElementById('pin2');
 pin1.onchange = (event) => {
     var inputText = event.target.value;
     pin1.style.backgroundColor = inputText;
 }
 
-var pin3 = document.getElementById('pin1');
+var pin3 = document.getElementById('pin3');
 pin1.onchange = (event) => {
     var inputText = event.target.value;
     pin1.style.backgroundColor = inputText;
 }
 
-var pin4 = document.getElementById('pin1');
+var pin4 = document.getElementById('pin4');
 pin1.onchange = (event) => {
     var inputText = event.target.value;
     pin1.style.backgroundColor = inputText;
