@@ -7,10 +7,10 @@ app.config['SECRET_KEY'] = 'J$n@M,D(25)'
 def index():
     return render_template('index.html')
 
-@app.route('game')
+@app.route('/game')
 def game():
     return render_template('game.html')
 
-@app.route('ai')
+@app.route('/ai')
 def ai():
     return render_template('ai.html')

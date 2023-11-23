@@ -4,8 +4,12 @@
 {% block content %}
 <div class="h-100 container-fluid justify-content-center d-flex">
     <div class="d-grid gap-4 col-6 mx-auto my-auto">
-        <button type="button" href="{{ url_for('game') }}" class="btn btn-primary btn-lg">Play Game</button>
-        <button type="button" href="{{ url_for('ai') }}" class="btn btn-primary btn-lg">Play versus A.I.</button>
+        <a href="{{ url_for('game') }}">
+            <button type="button" class="btn btn-primary btn-lg">Play Game</button>
+        </a>
+        <a href="{{ url_for('ai') }}">
+            <button type="button" class="btn btn-primary btn-lg">Play versus A.I.</button>
+        </a>
     </div>
 </div>
 {% endblock %}
