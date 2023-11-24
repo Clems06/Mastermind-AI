@@ -1,31 +1,5 @@
 #%%
-class Line:
-    def __init__(self, pins:dict, r_colour:int, r_place:int):
-        self.code=pins
-        self.w=r_colour
-        self.r=r_place
-
-class Board:
-    def __init__(self, name:str, pwd:dict):
-        self.name=name
-        self.pwd=pwd
-        self.lines=[]
-        self.p=p_init(self.pwd)
-
-    def l_append(self, line:Line):
-        self.lines.append(line)
-        self.p_update(line)
-
-    def eval_input(self, input:dict):
-        return evaluate(self.pwd, input)
-    
-    def append(self, input:dict):
-        w,r=self.eval_input(input)
-        self.l_append(Line(input, w, r))
-
-    def p_update(self, line:Line):
-        w,r=line.w, line.r
-        self.p=[p for p in self.p if (p.w, p.r)==(w, r)]
+from random import randint
 
 def p_init(pwd:tuple):
     def d_gen(n):
@@ -65,4 +39,38 @@ def todict(code:tuple):
         else:
             d[pin]=(i,)
     return d
+
+def random_password():
+    return todict(tuple([randint(1,8)]))
+
+class Line:
+    def __init__(self, pins:dict, r_colour:int, r_place:int):
+        self.code=pins
+        self.w=r_colour
+        self.r=r_place
+
+class Board:
+    def __init__(self, name:str, pwd:dict=random_password()):
+        self.name=name
+        self.pwd=pwd
+        self.lines=[]
+        self.p=p_init(self.pwd)
+
+    def l_append(self, line:Line):
+        self.lines.append(line)
+        self.p_update(line)
+
+    def eval_input(self, input:dict):
+        return evaluate(self.pwd, input)
+    
+    def append(self, input:dict):
+        w,r=self.eval_input(input)
+        self.l_append(Line(input, w, r))
+
+    def p_update(self, line:Line):
+        w,r=line.w, line.r
+        self.p=[p for p in self.p if (p.w, p.r)==(w, r)]
+
+color_to_number={"#D90404":1, "#05C7F2":2, "#078C03":3, "#F2B705":4, "#F25C05":5, "#F288A4":6, "#4A2ABF":7, "#606B73":8}
+colors={'red':"#D90404", 'blue':"#05C7F2", 'green':"#078C03", 'yellow':"#F2B705", 'orange':"#F25C05", 'pink':"#F288A4", 'violet':"#4A2ABF",'grey':"#606B73"}
 #%%

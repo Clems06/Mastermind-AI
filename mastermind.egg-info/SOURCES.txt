@@ -1,0 +1,5 @@
+setup.py
+mastermind.egg-info/PKG-INFO
+mastermind.egg-info/SOURCES.txt
+mastermind.egg-info/dependency_links.txt
+mastermind.egg-info/top_level.txt
