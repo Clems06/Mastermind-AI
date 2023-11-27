@@ -1,5 +1,6 @@
 .env/
-scss/
 interface/__pycache__/
 interface/app/__pycache__/
 interface/flask_session/
+__pycache__/
+sass/

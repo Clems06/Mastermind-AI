@@ -40,8 +40,15 @@ def todict(code:tuple):
             d[pin]=(i,)
     return d
 
+def tolist(code:dict):
+    l=[0,0,0,0]
+    for pin in code.items():
+        for n in pin[1]:
+            l[n]=pin[0]
+    return tuple(l)
+
 def random_password():
-    return todict(tuple([randint(1,8)]))
+    return todict(tuple([randint(1,8) for i in range(4)]))
 
 class Line:
     def __init__(self, pins:dict, r_colour:int, r_place:int):
@@ -71,6 +78,7 @@ class Board:
         w,r=line.w, line.r
         self.p=[p for p in self.p if (p.w, p.r)==(w, r)]
 
+number_to_color={1:"#D90404", 2:"#05C7F2", 3:"#078C03", 4:"#F2B705", 5:"#F25C05", 6:"#F288A4", 7:"#4A2ABF", 8:"#606B73"}
 color_to_number={"#D90404":1, "#05C7F2":2, "#078C03":3, "#F2B705":4, "#F25C05":5, "#F288A4":6, "#4A2ABF":7, "#606B73":8}
 colors={'red':"#D90404", 'blue':"#05C7F2", 'green':"#078C03", 'yellow':"#F2B705", 'orange':"#F25C05", 'pink':"#F288A4", 'violet':"#4A2ABF",'grey':"#606B73"}
 #%%

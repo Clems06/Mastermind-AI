@@ -2,13 +2,18 @@
 {% block title%}Welcome Page{% endblock %}
 
 {% block content %}
+<style>
+    body, html {
+        height: 100vh !important;
+    }
+</style>
 <div class="h-100 container-fluid justify-content-center d-flex">
     <div class="d-grid gap-4 col-6 mx-auto my-auto">
         <a class="mx-auto" href="{{ url_for('game') }}">
-            <button type="button" class="btn btn-primary btn-lg">Play Game</button>
+            <button type="button" class="btn btn-lg btn-primary text-secondary">Play Game</button>
         </a>
         <a class="mx-auto" href="{{ url_for('ai') }}">
-            <button type="button" class="btn btn-primary btn-lg">A.I. Training</button>
+            <button type="button" class="btn btn-light btn-lg">A.I. Training</button>
         </a>
     </div>
 </div>
