@@ -43,8 +43,8 @@ class Net():
     def mutate(self, epsilon=0.1):
         # random boolean mask for which values will be changed
         for layer in self.weights:
-            mask_random = np.random.choice([0, 1], size=layer.shape, p=((1 - epsilon), epsilon)).astype(np.bool)
-            mask_completely_random = np.random.choice([0, 1], size=layer.shape, p=((1 - epsilon), epsilon)).astype(np.bool) * mask_random
+            mask_random = np.random.choice([0, 1], size=layer.shape, p=((1 - epsilon), epsilon)).astype(bool)
+            mask_completely_random = np.random.choice([0, 1], size=layer.shape, p=((1 - epsilon), epsilon)).astype(bool) * mask_random
             random_products = np.random.randn(*layer.shape)*0.5+1
             completely_random = np.random.rand(*layer.shape) * 10
 
@@ -60,13 +60,7 @@ class Net():
             layer1[mask_random] = layer2[mask_random]
 
 
-
-
-
-
-
-
-net = Net([2, 5, 3], "sigmoid")
+"""net = Net([2, 5, 3], "sigmoid")
 print(net.getOutput([0, 0]))
-print()
+print()"""
 
