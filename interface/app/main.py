@@ -1,9 +1,13 @@
 from flask import Flask, render_template, request, session, jsonify
 from flask_session import Session
 from environment import *
-import os
+from github import Github
 
-path = os.path.join('.', os.path.dirname(__file__), 'static/js/sijax/')
+g = Github("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")
+database=g.get_repo("Clems06/Mastermind-AI")
+database.create_file("test.txt", "test", "testing", branch="Database")
+
+database = 'test.csv'
 
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -18,7 +22,7 @@ def index():
 def game():
     if request.method=="GET":
         session['board']=Board("Game", random_password())
-        return render_template('game.html', **colors, board=session['board'])
+        return render_template('game.html', **colors)
     else:
         if "answer" in request.form:
             answer=[number_to_color[c] for c in tolist(session['board'].pwd)]

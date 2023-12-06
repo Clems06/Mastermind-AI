@@ -44,7 +44,7 @@
   --bs-danger-rgb: 220, 53, 69;
   --bs-light-rgb: 255, 63, 129;
   --bs-dark-rgb: 33, 37, 41;
-  --bs-primary-text-emphasis: #052c65;
+  --bs-primary-text-emphasis: #0FBF9F;
   --bs-secondary-text-emphasis: #2b2f32;
   --bs-success-text-emphasis: #0a3622;
   --bs-info-text-emphasis: #055160;
@@ -79,7 +79,7 @@
   --bs-body-line-height: 1.5;
   --bs-body-color: #212529;
   --bs-body-color-rgb: 33, 37, 41;
-  --bs-body-bg: #fff;
+  --bs-body-bg: #25ffd7;
   --bs-body-bg-rgb: 255, 255, 255;
   --bs-emphasis-color: #000;
   --bs-emphasis-color-rgb: 0, 0, 0;
@@ -92,17 +92,17 @@
   --bs-tertiary-bg: #f8f9fa;
   --bs-tertiary-bg-rgb: 248, 249, 250;
   --bs-heading-color: inherit;
-  --bs-link-color: #0d6efd;
+  --bs-link-color: #0FBF9F;
   --bs-link-color-rgb: 13, 110, 253;
   --bs-link-decoration: underline;
-  --bs-link-hover-color: #0a58ca;
+  --bs-link-hover-color: #0FBF9F;
   --bs-link-hover-color-rgb: 10, 88, 202;
   --bs-code-color: #d63384;
   --bs-highlight-color: #212529;
   --bs-highlight-bg: #fff3cd;
   --bs-border-width: 1px;
   --bs-border-style: solid;
-  --bs-border-color: #dee2e6;
+  --bs-border-color: #FF3F81;
   --bs-border-color-translucent: rgba(0, 0, 0, 0.175);
   --bs-border-radius: 0.375rem;
   --bs-border-radius-sm: 0.25rem;
