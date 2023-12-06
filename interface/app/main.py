@@ -4,7 +4,8 @@ from environment import *
 from github import Github
 import csv
 
-g = Github("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")
+token="ghp"+"_kAPYTVnLUCao5zAupm0HTN3rucmPVL3i19vB"
+g = Github(token)
 database=g.get_repo("Clems06/Mastermind-AI")
 
 app = Flask(__name__)
@@ -38,5 +39,5 @@ def game():
 @app.route('/ai')
 def ai():
     content=database.get_contents("database/general.csv", ref="Interface")
-    print(content.decoded_content)
+    print(content.decoded_content.decode())
     return render_template('ai.html')
