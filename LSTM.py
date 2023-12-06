@@ -17,7 +17,7 @@ def mutate_list(layer, epsilon=0.1, alpha=0.1):
     layer[mask_completely_random] = completely_random[mask_completely_random]
 
 def combine_lists(list1, list2):
-    mask_random = np.random.choice([0, 1], size=list1.shape, p=(0.5, 0.5)).astype(np.bool)
+    mask_random = np.random.choice([0, 1], size=list1.shape, p=(0.5, 0.5)).astype(bool)
     list1[mask_random] = list2[mask_random]
 
 class Gate:
@@ -28,9 +28,9 @@ class Gate:
         if model:
             self.gate_input, self.gate_recurrent, self.gate_bias = model
         else:
-            self.gate_input = np.random.rand(input_size, output_size)
-            self.gate_recurrent = np.random.rand(output_size, output_size)
-            self.gate_bias = np.random.rand(output_size)
+            self.gate_input = np.random.rand(input_size, output_size) * 2 - 1
+            self.gate_recurrent = np.random.rand(output_size, output_size) * 2 - 1
+            self.gate_bias = np.random.rand(output_size) * 2 - 1
 
         self.activation_name = activation_function
         self.activation = {"sigmoid": vec_sigmoid, "tanh":np.tanh}[activation_function]
@@ -39,7 +39,7 @@ class Gate:
         return Gate(self.input_size, self.output_size, self.activation_name, [np.copy(self.gate_input), np.copy(self.gate_recurrent), np.copy(self.gate_bias)])
 
     def gate_output(self, input_list, prev_output):
-        return self.activation(input_list*self.gate_input + prev_output*self.gate_recurrent + self.gate_bias)
+        return self.activation(input_list.dot(self.gate_input) + prev_output.dot(self.gate_recurrent) + self.gate_bias)
 
     def mutate(self, epsilon=0.1, alpha=0.1):
         mutate_list(self.gate_input, epsilon, alpha)
@@ -63,7 +63,7 @@ class LSTM:
             self.forget_gate = Gate(input_size, output_size, "sigmoid")
             self.input_gate = Gate(input_size, output_size, "sigmoid")
             self.output_gate = Gate(input_size, output_size, "sigmoid")
-            self.memory_gate = Gate(input_size, output_size, "tahn")
+            self.memory_gate = Gate(input_size, output_size, "tanh")
 
     def __copy__(self):
         return LSTM(self.input_size, self.output_size, [copy.copy(self.forget_gate), copy.copy(self.input_gate), copy.copy(self.output_gate), copy.copy(self.memory_gate)])
@@ -100,15 +100,14 @@ class LSTM:
         self.memory_gate.combine(other.memory_gate)
 
 class Population:
-    def __init__(self, sizes, population_size, environment):
+    def __init__(self, sizes, population_size):
         self.population_size = population_size
-        self.environment = environment
         self.input_size, self.output_size = sizes
 
         self.population = []
-        self.keep_best = population_size/10
+        self.keep_best = population_size//10
 
-    def main_loop(self):
+    """def main_loop(self):
         num_generations = 100
 
         self.population = np.array([LSTM(self.input_size, self.output_size) for _ in range(self.population_size)])
@@ -116,10 +115,13 @@ class Population:
             print("Starting generation",generation)
             scores = self.environment.get_score(self.population, generation) #[score, population]
             best = np.array([i[1] for i in np.sort(scores)[:self.keep_best]])
-            self.population = self.new_generation(best)
+            self.population = self.new_generation(best)"""
+
+    def first_generation(self):
+        self.population = np.array([LSTM(self.input_size, self.output_size) for _ in range(self.population_size)])
 
     def new_generation(self, best):
-        out = best
+        self.population = best
 
         gamma = 0.1
         epsilon = 0.1
@@ -132,6 +134,8 @@ class Population:
                 choice2 = copy.copy(np.random.choice(best, 1)[0])
                 choice.combine(choice2)
 
-        return out
+            self.population = np.append(self.population, choice)
+
+
 
 
