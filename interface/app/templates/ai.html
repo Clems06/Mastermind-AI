@@ -7,7 +7,7 @@
         <a class="nav-link" href="{{url_for('index')}}"><p class="text-light my-auto">Back to Menu</p></a>
     </div>
 </nav>
-<nav class="sticky-top">
+<nav>
     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
         <button class="nav-link active" id="nav-current-tab" data-bs-toggle="tab" data-bs-target="#nav-current" role="tab" type="button">Current Generation</button>
         <button class="nav-link" id="nav-global-tab" data-bs-toggle="tab" data-bs-target="#nav-global" role="tab" type="button">Global Overview</button>
@@ -15,7 +15,28 @@
 </nav>
 <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-current" role="tabpanel" tabindex="0">
-        Current
+        <div class="container-fluid border">
+            <div class="row justify-content-center"><p>Generation number : {{current[0]}}</p></div>
+            <div class="row justify-content-center"><p>Average : {{current[2]}}</p></div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Rank</th>
+                        <th scope="col">Average</th>
+                        <th scope="col">Opening</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for i in range(current[1]|length) %}
+                    <tr>
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{current[1][i]}}</td>
+                        <td>{{current[3][i]}}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="tab-pane fade" id="nav-global" role="tabpanel" tabindex="0">
         Global

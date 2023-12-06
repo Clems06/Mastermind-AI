@@ -39,6 +39,8 @@ def game():
 def ai():
     content=database.get_contents("database/general.csv", ref="Interface").decoded_content.decode()
     current=content.split('\n')[1].split(',')
+    current[0]=current[0][2:]
+    current[1]=current[1].split('|')
+    current[3]=current[3].split('|')
     glob=[line.split(',') for line in content.split('\n')[2:]]
-    print(current, glob)
     return render_template('ai.html', current=current, glob=glob)
