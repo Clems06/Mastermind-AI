@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, session, jsonify
 from flask_session import Session
 from environment import *
 from github import Github
-import csv
 
 token="ghp"+"_kAPYTVnLUCao5zAupm0HTN3rucmPVL3i19vB"
 g = Github(token)
@@ -38,6 +37,8 @@ def game():
 
 @app.route('/ai')
 def ai():
-    content=database.get_contents("database/general.csv", ref="Interface")
-    print(content.decoded_content.decode())
-    return render_template('ai.html')
+    content=database.get_contents("database/general.csv", ref="Interface").decoded_content.decode()
+    current=content.split('\n')[1].split(',')
+    glob=[line.split(',') for line in content.split('\n')[2:]]
+    print(current, glob)
+    return render_template('ai.html', current=current, glob=glob)
