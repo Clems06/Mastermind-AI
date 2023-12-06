@@ -2,12 +2,10 @@ from flask import Flask, render_template, request, session, jsonify
 from flask_session import Session
 from environment import *
 from github import Github
+import csv
 
-g = Github("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")
+g = Github("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")
 database=g.get_repo("Clems06/Mastermind-AI")
-database.create_file("test.txt", "test", "testing", branch="Database")
-
-database = 'test.csv'
 
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -39,4 +37,6 @@ def game():
 
 @app.route('/ai')
 def ai():
+    content=database.get_contents("database/general.csv", ref="Interface")
+    print(content.decoded_content)
     return render_template('ai.html')
