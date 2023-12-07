@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session, jsonify
 from flask_session import Session
 from environment import *
 from github import Github
+import matplotlib.pyplot as plt
 
 token="ghp"+"_kAPYTVnLUCao5zAupm0HTN3rucmPVL3i19vB"
 g = Github(token)
@@ -41,6 +42,8 @@ def ai():
     current=content.split('\n')[1].split(',')
     current[0]=current[0][2:]
     current[1]=current[1].split('|')
-    current[3]=current[3].split('|')
+    current[3]=[[[number_to_color[int(i)] for i in j] for j in c.split(';')] for c in current[3].split('|')]
     glob=[line.split(',') for line in content.split('\n')[2:]]
+    for line in glob:
+        
     return render_template('ai.html', current=current, glob=glob)
