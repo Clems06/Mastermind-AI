@@ -15,18 +15,18 @@ class Main:
         self.population = Population((15, 12), self.n_individual)
 
     def save_current(self, gen, best_scores, average, openings):
-        file = database.get_contents("database/general.csv", ref="database")
+        file = database.get_contents("database/general.csv", ref="main")
         content = file.decoded_content.decode().split('\n')
         openings = '|'.join([';'.join([''.join([str(i) for i in c]) for c in o]) for o in openings])
         content[1]=','.join(('c_'+str(gen),'|'.join(best_scores),str(average),openings))
-        database.update_file(file.path, "dev", '\n'.join(content), file.sha, branch="database")
+        database.update_file(file.path, "dev", '\n'.join(content), file.sha, branch="main")
 
     def save_generation(self, gen, best_score, average, opening):
-        file = database.get_contents("database/general.csv", ref="database")
+        file = database.get_contents("database/general.csv", ref="main")
         content = file.decoded_content.decode().split('\n')
         opening = ';'.join([''.join([str(i) for i in c]) for c in opening])
         content.append(','.join((str(gen), str(best_score),str(average),opening)))
-        database.update_file(file.path, "dev", '\n'.join(content), file.sha, branch="database")
+        database.update_file(file.path, "dev", '\n'.join(content), file.sha, branch="main")
 
     def main_loop(self):
         num_generations = 100
