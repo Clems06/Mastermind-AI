@@ -38,7 +38,7 @@ def game():
 
 @app.route('/ai')
 def ai():
-    content=database.get_contents("database/general.csv", ref="Interface").decoded_content.decode()
+    content=database.get_contents("database/general.csv", ref="main").decoded_content.decode()
     current=content.split('\n')[1].split(',')
     current[0]=current[0][2:]
     current[1]=current[1].split('|')
