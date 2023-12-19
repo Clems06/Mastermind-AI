@@ -1,5 +1,5 @@
 from LSTM import Population
-from environment import *
+from net_environment import *
 import numpy as np
 from github import Github
 
@@ -13,6 +13,12 @@ class Main:
         # 12 sorties: 3x4 (couleurs)
         self.n_individual = 10
         self.population = Population((15, 12), self.n_individual)
+
+    def deep_save(self, generation, best):
+        for i in range(len(best)):
+            net = best[i]
+            content=net.forget_gate.to_csv()+"|"+net.input_gate.to_csv()+"|"+net.output_gate.to_csv()+"|"+net.memory_gate.to_csv()
+            database.create_file("database/generation_{0}/net_{1}.csv".format(generation, i), "init commit", content)
 
     def save_current(self, gen, best_scores, average, openings):
         file = database.get_contents("database/general.csv", ref="main")
@@ -41,8 +47,9 @@ class Main:
             best = sorted(scores, key=lambda x: x[0])[-self.population.keep_best:]
             average = sum([-i[0]/100 for i in scores])/self.n_individual
             self.save_current(generation, [str(-i[0]/100) for i in best], average, openings)
-            if generation%5==0:
+            if generation%save_gen_every==0:
                 self.save_generation(generation, -best[-1][0]/100, average, openings[-1])
+                self.deep_save(generation, best)
             self.population.new_generation(np.array([i[1] for i in best]))
 
     def get_scores(self, population:iter, n_openings:int, n_moves_per_opening:int):

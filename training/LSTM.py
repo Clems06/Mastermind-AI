@@ -51,6 +51,9 @@ class Gate:
         combine_lists(self.gate_recurrent, other.gate_recurrent)
         combine_lists(self.gate_bias, other.gate_bias)
 
+    def to_csv(self):
+        return ",".join(self.gate_input)+";"+",".join(self.gate_recurrent)+";"",".join(self.gate_bias)
+
 
 class LSTM:
     def __init__(self, input_size, output_size, gates=[]):
