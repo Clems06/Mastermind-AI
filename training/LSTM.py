@@ -51,6 +51,20 @@ class Gate:
         combine_lists(self.gate_recurrent, other.gate_recurrent)
         combine_lists(self.gate_bias, other.gate_bias)
 
+    def to_csv(self):
+        b = "|".join([";".join(map(str,a)) for a in self.gate_input])+\
+               ","+"|".join([";".join(map(str,a)) for a in self.gate_recurrent])+\
+               ","+"|".join(map(str,self.gate_bias))
+        return b
+
+    @classmethod
+    def from_csv(cls, csv, activation):
+        input_list, recurrent_list, bias_list = csv.split(",")
+        gate_input = np.array([[float(i) for i in a.split(";")] for a in input_list.split("|")])
+        gate_recurrent = np.array([[float(i) for i in a.split(";")] for a in recurrent_list.split("|")])
+        gate_bias = np.array([float(i) for i in bias_list.split("|")])
+        return cls(len(gate_input), len(gate_recurrent), activation, model=[gate_input, gate_recurrent, gate_bias])
+
 
 class LSTM:
     def __init__(self, input_size, output_size, gates=[]):
