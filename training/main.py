@@ -1,4 +1,4 @@
-from LSTM import Population
+from LSTM import *
 from net_environment import *
 import numpy as np
 from github import Github
@@ -8,17 +8,42 @@ g = Github(token)
 database=g.get_repo("Clems06/Mastermind-AI")
 
 class Main:
-    def __init__(self):
+    def __init__(self, continue_prev=False):
         # 15 entrees: 3x4 (couleurs) + 2 (noir et blanc) + 1 (premier coup)
         # 12 sorties: 3x4 (couleurs)
-        self.n_individual = 10
+        self.n_individual = 100
         self.population = Population((15, 12), self.n_individual)
+        if not continue_prev:
+            self.population.first_generation()
+            self.generation = 0
+        else:
+            saved = []
+            contents = database.get_contents("database")
+            biggest = 0
+            for file_content in contents:
+                if file_content.type == "dir":
+                    biggest = max(int(file_content.path.split("_")[-1]), biggest)
+            self.generation = biggest
+            contents = database.get_contents("database/generation_"+str(biggest))
+            for file_content in contents:
+                title, forget_list, input_list, output_list, memory_list = file_content.decoded_content.decode().split("\n")
+                forget_gate, input_gate, output_gate, memory_gate = Gate.from_csv(forget_list, "sigmoid"), Gate.from_csv(input_list, "sigmoid"), Gate.from_csv(output_list, "sigmoid"), Gate.from_csv(memory_list, "tanh"),
+                saved.append(LSTM(forget_gate.input_size, forget_gate.output_size, gates=[forget_gate, input_gate, output_gate, memory_gate]))
+            self.population.new_generation(saved)
+
+
 
     def deep_save(self, generation, best):
         for i in range(len(best)):
-            net = best[i]
-            content=net.forget_gate.to_csv()+"|"+net.input_gate.to_csv()+"|"+net.output_gate.to_csv()+"|"+net.memory_gate.to_csv()
-            database.create_file("database/generation_{0}/net_{1}.csv".format(generation, i), "init commit", content)
+            net = best[i][1]
+            content = "Gate input, Gate recurrent, Gate_bias\n"
+            content+=net.forget_gate.to_csv()+"\n"+net.input_gate.to_csv()+"\n"+net.output_gate.to_csv()+"\n"+net.memory_gate.to_csv()
+            path = "database/generation_{0}/net_{1}.csv".format(generation, i)
+            try:
+                contents = database.get_contents(path)
+                database.update_file(path, "save", content, contents.sha)
+            except:
+                database.create_file(path, "save", content)
 
     def save_current(self, gen, best_scores, average, openings):
         file = database.get_contents("database/general.csv", ref="main")
@@ -39,8 +64,8 @@ class Main:
         num_opening_moves = 3
         save_gen_every = 5
 
-        self.population.first_generation()
-        for generation in range(num_generations):
+
+        for generation in range(self.generation+1, num_generations):
             print("Starting generation",generation)
             scores, openings = self.get_scores(self.population.population, self.population.keep_best, num_opening_moves) #[score, population]
             print(sorted(scores, key=lambda x: x[0])[-self.population.keep_best:])
@@ -64,8 +89,8 @@ class Main:
         return scores, openings
 
     def get_score(self, individual, opening=0):
-        num_games = 3
-        tries_limit = 30
+        num_games = 20
+        tries_limit = 20
         first_game, opening=self.play_game(individual, tries_limit, opening=opening)
         games=[self.play_game(individual, tries_limit)[0] for _ in range(num_games-1)]+[first_game]
         return sum(games)/num_games, opening
@@ -91,5 +116,5 @@ class Main:
         return -len(board.p)-tries_limit*100, opening_moves
 
 
-main=Main()
+main=Main(continue_prev=True)
 main.main_loop()
