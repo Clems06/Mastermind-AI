@@ -12,7 +12,7 @@ class Main:
         # 15 entrees: 3x4 (couleurs) + 2 (noir et blanc) + 1 (premier coup)
         # 12 sorties: 3x4 (couleurs)
         self.n_individual = 100
-        self.population = Population((15, 12), self.n_individual)
+        self.population = Population((15, 12), self.n_individual, 0.3, 0.15, 0.1)
         if not continue_prev:
             self.population.first_generation()
             self.generation = 0

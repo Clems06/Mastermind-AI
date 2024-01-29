@@ -67,6 +67,7 @@ class Gate:
 
 
 class LSTM:
+
     def __init__(self, input_size, output_size, gates=[]):
         self.input_size = input_size
         self.output_size = output_size
@@ -114,9 +115,13 @@ class LSTM:
         self.memory_gate.combine(other.memory_gate)
 
 class Population:
-    def __init__(self, sizes, population_size):
+    def __init__(self, sizes, population_size, alpha, epsilon, gamma):
         self.population_size = population_size
         self.input_size, self.output_size = sizes
+
+        self.gamma = gamma     #Combine Probability
+        self.epsilon = epsilon   #Slightly random probability
+        self.alpha = alpha     #Completly random probability
 
         self.population = []
         self.keep_best = population_size//10
@@ -136,18 +141,12 @@ class Population:
 
     def new_generation(self, best):
         self.population = best
-
-        gamma = 0.1
-        epsilon = 0.1
-        alpha = 0.1
-
         for i in range(self.population_size - len(best)):
             choice = copy.copy(np.random.choice(best, 1)[0])
-            choice.mutate(epsilon, alpha)
-            if random.random() < gamma:
+            choice.mutate(self.epsilon, self.alpha)
+            if random.random() < self.gamma:
                 choice2 = copy.copy(np.random.choice(best, 1)[0])
                 choice.combine(choice2)
-
             self.population = np.append(self.population, choice)
 
 
