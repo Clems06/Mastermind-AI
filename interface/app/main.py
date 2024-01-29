@@ -32,7 +32,7 @@ def game():
             session['board'].append(combination)
             line=session['board'].lines[-1]
             if line.r==4:
-                return jsonify({'correct':True})
+                return jsonify({'correct':True, 'tries':str(len(session['board'].lines))})
             else:
                 return jsonify({'correct':False, 'w':line.w, 'r':line.r, 'tries':str(len(session['board'].lines)), 'old_pin1':pin1, 'old_pin2':pin2, 'old_pin3':pin3, 'old_pin4':pin4})
 
@@ -41,9 +41,13 @@ def ai():
     content=database.get_contents("database/general.csv", ref="main").decoded_content.decode()
     current=content.split('\n')[1].split(',')
     current[0]=current[0][2:]
-    current[1]=current[1].split('|')
-    current[3]=[[[number_to_color[int(i)] for i in j] for j in c.split(';')] for c in current[3].split('|')]
-    glob=[line.split(',') for line in content.split('\n')[2:]]
-    for line in glob:
-        
+    current[1]=current[1].split('|')[::-1]
+    current[3]=[[[number_to_color[int(i)] for i in j] for j in c.split(';')] for c in current[3].split('|')][::-1]
+    glob=[]
+    for line in content.split('\n')[2:]:
+        if line!='':
+            div=line.split(',')
+            print(div)
+            glob.append([div[0],div[1],div[2],[[number_to_color[int(i)] for i in j] for j in div[3].split(';')]])
+    print(glob)
     return render_template('ai.html', current=current, glob=glob)
