@@ -1,3 +1,6 @@
 .idea/
-.env/
+interface/venv/
 __pycache__/
+interface/__pycache__/
+interface/app/__pycache__/
+training/__pycache__/
