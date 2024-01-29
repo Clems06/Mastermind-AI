@@ -4,3 +4,4 @@ __pycache__/
 interface/__pycache__/
 interface/app/__pycache__/
 training/__pycache__/
+interface/flask_session

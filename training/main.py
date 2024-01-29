@@ -47,7 +47,10 @@ class Main:
         file = database.get_contents("database/general.csv", ref="main")
         content = file.decoded_content.decode().split('\n')
         openings = '|'.join([';'.join([''.join([str(i) for i in c]) for c in o]) for o in openings])
-        content[1]=','.join(('c_'+str(gen),'|'.join(best_scores),str(average),openings))
+        if len(content)>1:
+            content[1]=','.join(('c_'+str(gen),'|'.join(best_scores),str(average),openings))
+        else:
+            content.append(','.join(('c_'+str(gen),'|'.join(best_scores),str(average),openings)))
         database.update_file(file.path, "dev", '\n'.join(content), file.sha, branch="main")
 
     def save_generation(self, gen, best_score, average, opening):
@@ -62,14 +65,12 @@ class Main:
         num_opening_moves = 3
         save_gen_every = 5
 
-
         for generation in range(self.generation+1, num_generations):
             print("Starting generation",generation)
             scores, openings = self.get_scores(self.population.population, self.population.keep_best, num_opening_moves) #[score, population]
-            print(sorted(scores, key=lambda x: x[0])[-self.population.keep_best:])
             best = sorted(scores, key=lambda x: x[0])[-self.population.keep_best:]
             average = sum([-i[0]/100 for i in scores])/self.n_individual
-            self.save_current(generation, [str(-i[0]/100) for i in best], average, openings)
+            self.save_current(generation, [str(round(-i[0]/100,2)) for i in best], round(average,2), openings)
             if generation%save_gen_every==0:
                 self.save_generation(generation, -best[-1][0]/100, average, openings[-1])
                 self.deep_save(generation, best)
@@ -80,7 +81,7 @@ class Main:
         openings=[]
         for individual, n in zip(population, range(len(population))):
             temp, opening = self.get_score(individual, opening=int(n<n_openings)*n_moves_per_opening)
-            print("New individual", temp)
+            print("New individual", temp/-100)
             scores.append((temp, individual))
             if n<n_openings:
                 openings.append(opening)
@@ -107,12 +108,9 @@ class Main:
                 return -coup*100, opening_moves
             elif len(board.p) == 1:
                 return -(coup+1) * 100, opening_moves
-
             board.append(encoded_output)
 
-
         return -len(board.p)-tries_limit*100, opening_moves
-
 
 main=Main(continue_prev=False)
 main.main_loop()
