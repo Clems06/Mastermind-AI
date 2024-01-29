@@ -31,8 +31,6 @@ class Main:
                 saved.append(LSTM(forget_gate.input_size, forget_gate.output_size, gates=[forget_gate, input_gate, output_gate, memory_gate]))
             self.population.new_generation(saved)
 
-
-
     def deep_save(self, generation, best):
         for i in range(len(best)):
             net = best[i][1]
@@ -116,5 +114,5 @@ class Main:
         return -len(board.p)-tries_limit*100, opening_moves
 
 
-main=Main(continue_prev=True)
+main=Main(continue_prev=False)
 main.main_loop()
