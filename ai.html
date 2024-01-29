@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% block title %}A.I. Training{% endblock %}
+{% block content %}
+<nav class="navbar navbar-light bg-primary bg-opacity-75 pt-lg-3">
+    <div class="container-fluid">
+        <a class="navbar-brand"><img src="../static/image/Mastermind_Logo.png" height="50" class="d-inline-block align-text-top"></a>
+        <a class="nav-link" href="{{url_for('index')}}"><p class="text-light my-auto">Back to Menu</p></a>
+    </div>
+</nav>
+<nav>
+    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-current-tab" data-bs-toggle="tab" data-bs-target="#nav-current" role="tab" type="button">Current Generation</button>
+        <button class="nav-link" id="nav-global-tab" data-bs-toggle="tab" data-bs-target="#nav-global" role="tab" type="button">Global Overview</button>
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-current" role="tabpanel" tabindex="0">
+        {% for n in range(current[1]|length) %}
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="off{{n}}">
+            <div class="offcanvas-header">
+                <p class="h1 offcanvas-title">Rank number {{n+1}}</p>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="container-fluid px-0">
+                {% for i in range(2) %}
+                    <div class="row border w-100 mx-auto py-2 my-2 rounded-3 bg-secondary">
+                        <p class="h3 mb-2 text-light">Move n° {{i+1}}</p>
+                    {% for j in range(4) %}
+                        <div class="col-3 d-flex mx-0 justify-content-center">
+                            <span class="pin_m" style="border-radius: 50%; background-color: {{current[3][n][i][j]}};"></span>
+                        </div>
+                    {% endfor %}
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="input-group my-2">
+                    <div class="input-group-text bg-primary">Generation Number</div>
+                    <input type="text" value="{{current[0]}}" class="form-control text-center" disabled>
+                </div>
+                <div class="input-group mb-2">
+                    <div class="input-group-text bg-primary">Average</div>
+                    <input type="text" value="{{current[2]}}" class="form-control text-center" disabled>
+                </div>
+            </div>
+            <div class="container-fluid w-100 rounded-3 px-0 overflow-hidden border">
+                <table class="table table-striped mx-0 mb-0">
+                    <thead class="table-primary">
+                        <tr>
+                            <th scope="col">Rank</th>
+                            <th scope="col">Score</th>
+                            <th scope="col">Opening</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider table-secondary">
+                    {% for i in range(current[1]|length) %}
+                        <tr>
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{current[1][i]}}</td>
+                            <td>
+                                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#off{{i}}">Show</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade mx-1 my-2" id="nav-global" role="tabpanel">
+        {% for n in range(glob|length) %}
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="off_g{{n}}">
+            <div class="offcanvas-header">
+                <p class="h1 offcanvas-title">Generation number {{glob[n][0]}}</p>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="container-fluid px-0">
+                {% for i in range(2) %}
+                    <div class="row border w-100 mx-auto py-2 my-2 rounded-3 bg-secondary">
+                        <p class="h3 mb-2 text-light">Move n° {{i+1}}</p>
+                    {% for j in range(4) %}
+                        <div class="col-3 d-flex mx-0 justify-content-center">
+                            <span class="pin_m" style="border-radius: 50%; background-color: {{glob[n][3][i][j]}};"></span>
+                        </div>
+                    {% endfor %}
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="container-fluid">
+            <div class="container-fluid w-100 rounded-3 px-0 overflow-scroll border">
+                <table class="table table-striped mx-0 mb-0">
+                    <thead class="table-primary">
+                        <tr>
+                            <th scope="col">Generation</th>
+                            <th scope="col">Best Score</th>
+                            <th scope="col">Average</th>
+                            <th scope="col">Opening</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider table-secondary">
+                    {% for i in range(glob|length) %}
+                        <tr>
+                            <th scope="row">{{glob[i][0]}}</th>
+                            <td>{{glob[i][1]}}</td>
+                            <td>{{glob[i][2]}}</td>
+                            <td>
+                                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#off_g{{i}}">Show</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
