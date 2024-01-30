@@ -126,16 +126,6 @@ class Population:
         self.population = []
         self.keep_best = population_size//10
 
-    """def main_loop(self):
-        num_generations = 100
-
-        self.population = np.array([LSTM(self.input_size, self.output_size) for _ in range(self.population_size)])
-        for generation in range(num_generations):
-            print("Starting generation",generation)
-            scores = self.environment.get_score(self.population, generation) #[score, population]
-            best = np.array([i[1] for i in np.sort(scores)[:self.keep_best]])
-            self.population = self.new_generation(best)"""
-
     def first_generation(self):
         self.population = np.array([LSTM(self.input_size, self.output_size) for _ in range(self.population_size)])
 

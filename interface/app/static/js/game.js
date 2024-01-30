@@ -13,17 +13,15 @@ function end(pin1, pin2, pin3, pin4, m) {
     message.classList.add("text-center");
     document.getElementById("message").replaceWith(message);
     if (pin1!="") {
-        document.getElementById("pin1").style.backgroundColor=pin1;
-        document.getElementById("pin2").style.backgroundColor=pin2;
-        document.getElementById("pin3").style.backgroundColor=pin3;
-        document.getElementById("pin4").style.backgroundColor=pin4;
+        document.getElementById("printPin1").style.backgroundColor=pin1;
+        document.getElementById("printPin2").style.backgroundColor=pin2;
+        document.getElementById("printPin3").style.backgroundColor=pin3;
+        document.getElementById("printPin4").style.backgroundColor=pin4;
     }
     for (let i = 1; i < 5; i++) {
-        document.getElementById("pin"+i).classList.add("border-primary");
-        document.getElementById("pin"+i).classList.remove("border-light");
+        document.getElementById("printPin"+i).classList.add("border-primary");
+        document.getElementById("printPin"+i).classList.remove("border-light");
     }
-    document.getElementById("pin4").classList.add("border-primary");
-    document.getElementById("pin4").classList.remove("border-light");
     var replace = document.createElement("a");
     replace.innerHTML = "Start New Game";
     replace.classList.add("btn");

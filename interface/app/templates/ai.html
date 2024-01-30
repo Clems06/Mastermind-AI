@@ -1,10 +1,23 @@
 {% extends 'base.html' %}
 {% block title %}A.I. Training{% endblock %}
 {% block content %}
-<nav class="navbar navbar-light bg-primary bg-opacity-75 pt-lg-3">
+<nav class="navbar navbar-expand-lg navbar-light bg-primary bg-opacity-75 pt-lg-3">
     <div class="container-fluid">
         <a class="navbar-brand"><img src="../static/image/Mastermind_Logo.png" height="50" class="d-inline-block align-text-top"></a>
-        <a class="nav-link" href="{{url_for('index')}}"><p class="text-light my-auto">Back to Menu</p></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse mx-4" id="nav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item mx-lg-4">
+                    <a class="nav-link" href="{{ url_for('solver') }}" role="button"><p class="responsive-font text-secondary">A.I. Solver</p></a>                   
+                </li>
+                <li class="nav-item mx-lg-4">
+                    <a class="nav-link" href="{{ url_for('game') }}" role="button"><p class="responsive-font text-secondary">Play Game</p></a>                   
+                </li>
+            </ul>
+            <a class="nav-link" href="{{url_for('index')}}"><p class="responsive-font text-light ">Back to Menu</p></a>
+        </div>
     </div>
 </nav>
 <nav>
