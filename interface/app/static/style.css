@@ -49,6 +49,7 @@
     }
     .pin_container {
         height: 80px;
+        width: 80px;
     }
     html, body {
         margin: 0;

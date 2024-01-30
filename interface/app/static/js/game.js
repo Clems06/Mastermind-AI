@@ -1,25 +1,8 @@
-var pin1 = document.getElementById('pin1');
-pin1.onchange = (event) => {
-    var inputText = event.target.value;
-    pin1.style.backgroundColor = inputText;
-}
-
-var pin2 = document.getElementById('pin2');
-pin2.onchange = (event) => {
-    var inputText = event.target.value;
-    pin2.style.backgroundColor = inputText;
-}
-
-var pin3 = document.getElementById('pin3');
-pin3.onchange = (event) => {
-    var inputText = event.target.value;
-    pin3.style.backgroundColor = inputText;
-}
-
-var pin4 = document.getElementById('pin4');
-pin4.onchange = (event) => {
-    var inputText = event.target.value;
-    pin4.style.backgroundColor = inputText;
+function updateColor(object) {
+    const pin = object.getAttribute("data-pin");
+    const color = object.getAttribute("data-color");
+    document.getElementById("printPin"+pin).style.backgroundColor=color;
+    document.getElementById("printPin"+pin).setAttribute("data-pin",color)
 }
 
 function end(pin1, pin2, pin3, pin4, m) {
@@ -29,10 +12,12 @@ function end(pin1, pin2, pin3, pin4, m) {
     message.classList.add("h4");
     message.classList.add("text-center");
     document.getElementById("message").replaceWith(message);
-    document.getElementById("pin1").style.backgroundColor=pin1;
-    document.getElementById("pin2").style.backgroundColor=pin2;
-    document.getElementById("pin3").style.backgroundColor=pin3;
-    document.getElementById("pin4").style.backgroundColor=pin4;
+    if (pin1!="") {
+        document.getElementById("pin1").style.backgroundColor=pin1;
+        document.getElementById("pin2").style.backgroundColor=pin2;
+        document.getElementById("pin3").style.backgroundColor=pin3;
+        document.getElementById("pin4").style.backgroundColor=pin4;
+    }
     for (let i = 1; i < 5; i++) {
         document.getElementById("pin"+i).classList.add("border-primary");
         document.getElementById("pin"+i).classList.remove("border-light");
@@ -49,7 +34,7 @@ function end(pin1, pin2, pin3, pin4, m) {
     document.getElementById("sender").replaceWith(replace);
 }
 
-function answer() {
+function answer(optional_text="") {
     $.ajax({
         type:'POST',
         url:'/game',
@@ -58,7 +43,7 @@ function answer() {
         }
     })
     .done(function(data){
-        end(data.a_pin1, data.a_pin2, data.a_pin3, data.a_pin4, "This was the correct password");
+        end(data.a_pin1, data.a_pin2, data.a_pin3, data.a_pin4, optional_text+"This was the correct password");
     })
 }
 
@@ -67,18 +52,17 @@ function sub() {
         type:'POST',
         url:'/game',
         data:{
-            pin1:$("#pin1").val(),
-            pin2:$("#pin2").val(),
-            pin3:$("#pin3").val(),
-            pin4:$("#pin4").val()
+            pin1:document.getElementById("printPin1").getAttribute("data-pin"),
+            pin2:document.getElementById("printPin2").getAttribute("data-pin"),
+            pin3:document.getElementById("printPin3").getAttribute("data-pin"),
+            pin4:document.getElementById("printPin4").getAttribute("data-pin")
         }
     })
     .done(function(data){
         if (data.correct==true) {
-            const message="Bravo ! You won in "+data.tries+" tries";
-            end($("#pin1").val(), $("#pin2").val(), $("#pin3").val(), $("#pin4").val(), message);
+            end("", "", "", "", "Bravo ! You won in "+data.tries+" tries");
         } else if (data.tries==12) {
-            end($("#pin1").val(), $("#pin2").val(), $("#pin3").val(), $("#pin4").val(), "You spent all of your tries... This was the correct combination");
+            answer("You spent all your tries...");
         }
         document.getElementById("tries").innerHTML=12-data.tries;
         box=document.getElementById("row"+data.tries);

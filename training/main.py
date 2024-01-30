@@ -12,7 +12,7 @@ class Main:
         # 15 entrees: 3x4 (couleurs) + 2 (noir et blanc) + 1 (premier coup)
         # 12 sorties: 3x4 (couleurs)
         self.n_individual = 100
-        self.population = Population((15, 12), self.n_individual, 0.3, 0.15, 0.1)
+        self.population = Population((15, 12), self.n_individual, 0.15, 0.15, 0.1)
         if not continue_prev:
             self.population.first_generation()
             self.generation = 0
@@ -72,7 +72,7 @@ class Main:
             average = sum([-i[0]/100 for i in scores])/self.n_individual
             self.save_current(generation, [str(round(-i[0]/100,2)) for i in best], round(average,2), openings)
             if generation%save_gen_every==0:
-                self.save_generation(generation, -best[-1][0]/100, average, openings[-1])
+                self.save_generation(generation, round(-best[-1][0]/100,2), round(average,2), openings[-1])
                 self.deep_save(generation, best)
             self.population.new_generation(np.array([i[1] for i in best]))
 

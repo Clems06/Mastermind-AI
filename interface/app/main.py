@@ -47,7 +47,5 @@ def ai():
     for line in content.split('\n')[2:]:
         if line!='':
             div=line.split(',')
-            print(div)
             glob.append([div[0],div[1],div[2],[[number_to_color[int(i)] for i in j] for j in div[3].split(';')]])
-    print(glob)
     return render_template('ai.html', current=current, glob=glob)
