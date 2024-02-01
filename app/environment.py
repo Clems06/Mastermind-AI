@@ -10,20 +10,30 @@ color_to_number = {"#D90404": 1, "#05C7F2": 2, "#078C03": 3, "#F2B705": 4, "#F25
 colors = {'red': "#D90404", 'blue': "#05C7F2", 'green': "#078C03", 'yellow': "#F2B705", 'orange': "#F25C05",
           'pink': "#F288A4", 'violet': "#4A2ABF", 'grey': "#606B73"}
 
+def array_init(n):
+    if n==1:
+        return [np.array([i]) for i in range(1,9)]
+    else:
+        l = []
+        for i in range(1,9):
+            a = np.array([i])
+            for _ in array_init(n-1):
+                l.append(np.concatenate((a, _)))
+        return l
+
 def p_init(n):
-    c = [{1: (0,)}, {2: (0,)}, {3: (0,)}, {4: (0,)}, {5: (0,)}, {6: (0,)}, {7: (0,)}, {8: (0,)}]
     if n == 1:
-        return c
+        return [{i : (0,)} for i in range(1, 9)]
     else:
         l = []
         for d in p_init(n - 1):
             for k in range(1, 9):
-                d_t = d.copy()
-                if k in d_t:
-                    d_t[k] += (n - 1,)
+                _=d.copy()
+                if k in d:
+                    _[k]+=(n-1,)
                 else:
-                    d_t[k] = (n - 1,)
-                l.append(d_t)
+                    _[k]=(n-1,)
+                l.append(_)
         return l
 
 def evaluate(pins1: dict, pins2: dict):
@@ -38,9 +48,9 @@ def evaluate(pins1: dict, pins2: dict):
             r += r_t
     return w, r
 
-def todict(code: tuple):
+def todict(code: dict):
     d = {}
-    for pin, i in zip(code, range(4)):
+    for pin, i in zip(code,range(4)):
         if pin in d:
             d[pin] += (i,)
         else:
@@ -48,14 +58,13 @@ def todict(code: tuple):
     return d
 
 def tolist(code: dict):
-    l = [0, 0, 0, 0]
-    for pin in code.items():
-        for n in pin[1]:
-            l[n] = pin[0]
-    return tuple(l)
+    inv_map = {}
+    for k, v in code.items():
+        inv_map[v] = inv_map.get(v, []) + [k]
+    return inv_map
 
 def random_password():
-    return todict(tuple([randint(1, 8) for i in range(4)]))
+    return todict({i : randint(1, 8) for i in range(4)})
 
 def toinput(code, w, r):
     output = [0 for _ in range(12)] + [w/4, r/4, 0]
