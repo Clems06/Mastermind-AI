@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, session, jsonify
 from flask_session import Session
 import matplotlib.pyplot as plt
-from environment import *
+from solver.environment import *
 
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'filesystem'

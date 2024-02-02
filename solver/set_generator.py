@@ -2,11 +2,12 @@
 import itertools
 import numpy as np
 import time
-from environment import *
+from solver.environment import *
 
 def blank_generator(white_pins, line, color_mask, placed_positions, banned_colors) -> set:
-    """blank_generator(white_pins: dict, line: np.array, color_mask: dict, placed_positions: np.array, banned_colors: np.array)
+    """blank_generator(white_pins: dict, line: np.array, color_mask: dict, placed_positions: np.array, banned_colors: np.array) -> B: set
     """
+
     rge = np.arange(line.size)
     #Captures cases when all white pins have been placed
     if len(white_pins)==0:
